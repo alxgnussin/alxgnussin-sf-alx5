@@ -32,7 +32,7 @@ def render_cart():
         meals.append(meal)
 
     cart_form = CartForm()
-    if not cart_form.is_submitted() and session['is_auth']:
+    if not cart_form.is_submitted() and 'is_auth' in session:
         client = db.session.query(User).get(session['user_id'])
         cart_form.client_name.data = client.name
         cart_form.client_address.data = client.address
@@ -56,6 +56,7 @@ def render_cart():
         db.session.add(order)
         db.session.commit()
         session['cart'] = []
+        session['total'] = 0
 
         return redirect(url_for('render_ordered'))
 
@@ -146,15 +147,12 @@ def render_ordered():
 @app.route('/add_to_cart/', methods=['POST'])
 def render_add():
     meal_id = request.form.get('meal_id')
-    if 'cart' not in session:
-        session['cart'] = []
-        session['total'] = 0
 
-    cart = session['cart']
+    cart = session.get('cart', [])
     cart.append(meal_id)
     session['cart'] = cart
 
-    total = session['total']
+    total = session.get('total', 0)
     meal = db.session.query(Meal).get(meal_id)
     total += meal.price
     session['total'] = total
