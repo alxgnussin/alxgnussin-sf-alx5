@@ -122,7 +122,6 @@ def render_login():
         if user and user.password == password:
             session['is_auth'] = True
             session['user_id'] = user.id
-            # session['user_mail'] = user.mail
 
             return redirect(url_for('render_account'))
 
