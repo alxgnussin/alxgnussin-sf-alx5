@@ -45,7 +45,7 @@
 
     <section>
       {% for offer in offers %}
-      <h3 class="my-4">{{offer['category_title']}}</h3>
+      <h3 class="my-4">{{ offer['category_title'] }}</h3>
       <div class="row mt-4">
         {% set meals=offer['meals'] %}
         {% for meal in meals %}
@@ -53,10 +53,10 @@
           <div class="card mb-3">
             <img src="{{ url_for('static', filename=meal['picture']) }}" width="300" height="200" class="card-img-top" alt="">
             <div class="card-body">
-              <h4 class="h5 card-title">{{meal['title']}}</h4>
-              <p class="card-text">{{meal['description']}}</p>
+              <h4 class="h5 card-title">{{ meal['title'] }}</h4>
+              <p class="card-text">{{ meal['description'] }}</p>
               <form action="{{ url_for('render_add') }}" method="POST">
-                <input type="hidden" name="meal_id" value="{{meal['id']}}" />
+                <input type="hidden" name="meal_id" value="{{ meal['id'] }}" />
                 <button type="submit" class="btn btn-danger btn-sm">В корзину</button>
               </form>
             </div>

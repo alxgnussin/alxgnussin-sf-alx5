@@ -55,6 +55,7 @@ def render_cart():
 
         db.session.add(order)
         db.session.commit()
+        session['cart'] = []
 
         return redirect(url_for('render_ordered'))
 
@@ -63,7 +64,17 @@ def render_cart():
 
 @app.route('/account/')  # личный кабинет
 def render_account():
-    return render_template('account.html')
+    orders = db.session.query(Order).filter(Order.user_id == session['user_id']).all()
+
+    order_list = []
+    for order in orders:
+        meal_list = []
+        for meal in order.meals:
+            meal_list.append(meal)
+        my_dict = {'order_date': order.order_date, 'order_sum': order.order_sum, 'meals': meal_list}
+        order_list.append(my_dict)
+        print(order.order_date)
+    return render_template('account.html', orders=order_list)
 
 
 @app.route('/register/', methods=['GET', 'POST'])
