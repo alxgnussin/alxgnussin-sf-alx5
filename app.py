@@ -4,6 +4,7 @@ import os
 from datetime import date
 
 from flask import Flask, render_template, request, redirect, session, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from models import db, Meal, User, Order
 from operations import get_meals_for_main
@@ -94,12 +95,12 @@ def render_register():
         
             user = User(
                 name=new_user_name,
-                password=new_user_password,
+                password=generate_password_hash(new_user_password),
                 mail=new_user_mail,
                 phone=new_user_phone,
                 address=new_user_address
             )
-
+            print(user.password)
             db.session.add(user)
             db.session.commit()
 
@@ -119,7 +120,7 @@ def render_login():
         password = login_form.password.data
 
         user = db.session.query(User).filter(User.mail == mail).first()
-        if user and user.password == password:
+        if user and check_password_hash(user.password, password):
             session['is_auth'] = True
             session['user_id'] = user.id
 

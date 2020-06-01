@@ -14,7 +14,7 @@ class User(db.Model):
     __tablename__ = 'p5_users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
-    password = db.Column(db.String(32), nullable=False)
+    password = db.Column(db.String(128), nullable=False)
     mail = db.Column(db.String(30), nullable=False)
     phone = db.Column(db.String(16), nullable=False)
     address = db.Column(db.Text, nullable=True)
