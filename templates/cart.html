@@ -10,14 +10,14 @@
     <div class="alert alert-warning" role="alert">Блюдо удалено из корзины</div>
     {% endif %}
     {% if not session['is_auth'] %}
-    <div class="alert alert-warning" role="alert">Чтобы сделать заказ – <a href="{{ url_for('render_login') }}">войдите</a> или <a
-        href="{{ url_for('render_register') }}">зарегистрируйтесь</a></div>
+    <div class="alert alert-warning" role="alert">Чтобы сделать заказ – <a href="{{ url_for('auth.render_login') }}">войдите</a> или <a
+        href="{{ url_for('auth.render_register') }}">зарегистрируйтесь</a></div>
     {% endif %}
     <div class="row mt-5">
 
       <div class="col-4">
         {% if session['is_auth'] and session['total'] %}
-        <form action="{{ url_for('render_cart') }}" method="POST" novalidate>
+        <form action="{{ url_for('store.render_cart') }}" method="POST" novalidate>
           {{ form.csrf_token }}
           <h4 class="">Ваши данные</h4>
           <div class=" md-4 order-md-1">
@@ -63,7 +63,7 @@
             <td>1</td>
             <td>{{meal['price']}}</td>
             <td>
-              <form action="{{ url_for('render_delete') }}" method="POST">
+              <form action="{{ url_for('store.render_delete') }}" method="POST">
                 <input type="hidden" name="meal_id" value="{{meal['id']}}"/>
                 <button type="submit" class="btn btn-outline-danger btn-sm">Удалить</button>
               </form>
