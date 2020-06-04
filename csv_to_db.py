@@ -30,7 +30,6 @@ def insert_to_categories():
 
 def insert_to_meals():
     my_list = csv_reader(meals)
-    #print(my_list)
     conn = psycopg2.connect(conn_str)
     curs = conn.cursor()
     prefix = 'INSERT INTO "p5_meals" ("title", "price", "description", "picture", "category_id") VALUES '

@@ -18,4 +18,4 @@ app.register_blueprint(auth_blueprint.bp)
 app.register_blueprint(store_blueprint.bp)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8080, debug=True)
